@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="120" rx="16" fill="url(#bg)"/>
+  <rect x="16" y="16" width="368" height="88" rx="12" fill="white" opacity="0.8"/>
+  <text x="200" y="52" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="700" fill="#14213d">请选出下方图片中的</text>
+  <text x="200" y="82" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="800" fill="#4f8cff">蓝色方块</text>
+</svg>

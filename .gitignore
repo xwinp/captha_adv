@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.log
+*.tmp
+fail.html
+cookie.txt
+challenge*.html
+home.html
+goods.html
+custom.html

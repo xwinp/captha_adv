@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"process.stdin.resume\\(\\);let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const o=JSON.parse\\(d\\);console.log\\('folderName:',o.folderName,'| selectionMode:',o.selectionMode,'| choices:',o.choices.length\\)}\\)\")",
+      "Bash(pkill -9 -f \"node server\")",
+      "Bash(node -e ' *)",
+      "Bash(pkill -9 -f \"node server/index\")",
+      "Bash(node -e \"process.stdin.resume\\(\\);let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const o=JSON.parse\\(d\\);console.log\\('folder:',o.folderName,'mode:',o.selectionMode,'choices:',o.choices.length\\)}\\)\")",
+      "Bash(curl -s -o /dev/null -w \"page HTTP %{http_code}\\\\n\" http://127.0.0.1:4175/local-page)",
+      "Bash(node -e \"process.stdin.resume\\(\\);let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const o=JSON.parse\\(d\\);console.log\\('folder:',o.folderName,'mode:',o.selectionMode\\)}\\)\")",
+      "Bash(curl -s -X POST http://127.0.0.1:4175/local-verify -H \"Content-Type: application/json\" -d \"{\\\\\"folderName\\\\\":\\\\\"prompt1\\\\\",\\\\\"answers\\\\\":[\\\\\"blue-square.svg\\\\\"]}\")",
+      "Bash(rm -rf prompt1/题干图片 prompt1/题目图片 prompt1/question.json)",
+      "Bash(rm -rf prompt2/题干图片 prompt2/题目图片 prompt2/question.json)",
+      "Bash(node -e \"process.stdin.resume\\(\\);let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const o=JSON.parse\\(d\\);console.log\\('prompt:',o.promptGroup,'folder:',o.folderName,'mode:',o.selectionMode\\)}\\)\")",
+      "Bash(curl -s -X POST http://127.0.0.1:4175/local-verify -H \"Content-Type: application/json\" -d \"{\\\\\"promptGroup\\\\\":\\\\\"prompt1\\\\\",\\\\\"folderName\\\\\":\\\\\"Q1\\\\\",\\\\\"answers\\\\\":[\\\\\"blue-square.svg\\\\\"]}\")",
+      "Bash(curl -s -X POST http://127.0.0.1:4175/local-verify -H \"Content-Type: application/json\" -d \"{\\\\\"promptGroup\\\\\":\\\\\"prompt1\\\\\",\\\\\"folderName\\\\\":\\\\\"Q1\\\\\",\\\\\"answers\\\\\":[\\\\\"red-circle.svg\\\\\"]}\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://127.0.0.1:4175/local-files/prompt1/Q1/prompt/prompt.svg)",
+      "Bash(curl -s http://127.0.0.1:4175/local-challenge/prompt2/Q2)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}, size: %{size_download}\\\\n\" http://127.0.0.1:4175/demo)",
+      "Bash(curl -s http://127.0.0.1:4175/local-debug-challenge/prompt1/Q1)",
+      "Bash(node -e \"process.stdin.resume\\(\\);let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const o=JSON.parse\\(d\\);console.log\\('correct:',o.correctAnswers,'choices:',o.choices.length\\)}\\)\")",
+      "Bash(curl -s http://127.0.0.1:4175/demo)"
+    ]
+  }
+}

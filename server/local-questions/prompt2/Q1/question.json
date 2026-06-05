@@ -1,0 +1,21 @@
+{
+  "prompt": [
+    "picture/prompt.svg"
+  ],
+  "question": [
+    "picture/blue-square.svg",
+    "picture/green-triangle.svg",
+    "picture/orange-diamond.svg",
+    "picture/purple-hex.svg",
+    "picture/red-circle.svg",
+    "picture/yellow-star.svg"
+  ],
+  "answers": {
+    "red-circle.svg": false,
+    "blue-square.svg": false,
+    "green-triangle.svg": true,
+    "yellow-star.svg": false,
+    "purple-hex.svg": false,
+    "orange-diamond.svg": false
+  }
+}

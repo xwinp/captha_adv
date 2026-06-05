@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"server/local-questions/q-001/题干图片\" \"server/local-questions/q-001/题目图片\" \"server/local-questions/q-001/正确答案\" \"server/local-questions/q-002/题干图片\" \"server/local-questions/q-002/题目图片\" \"server/local-questions/q-002/正确答案\")",
+      "Bash(node server/index.js)",
+      "Bash(curl -s http://127.0.0.1:4175/local-folders)",
+      "Bash(node -e \"process.stdin.resume\\(\\); let d=''; process.stdin.on\\('data',c=>d+=c\\); process.stdin.on\\('end',\\(\\)=>console.log\\(JSON.stringify\\(JSON.parse\\(d\\),null,2\\)\\)\\)\")",
+      "Bash(curl -s http://127.0.0.1:4175/local-challenge)",
+      "Bash(curl -s -X POST http://127.0.0.1:4175/local-verify -H \"Content-Type: application/json\" -d \"{\\\\\"folderName\\\\\":\\\\\"q-001\\\\\",\\\\\"answers\\\\\":[\\\\\"blue-square.svg\\\\\"]}\")",
+      "Bash(curl -s -X POST http://127.0.0.1:4175/local-verify -H \"Content-Type: application/json\" -d \"{\\\\\"folderName\\\\\":\\\\\"q-001\\\\\",\\\\\"answers\\\\\":[\\\\\"red-circle.svg\\\\\"]}\")",
+      "Bash(curl -s -X POST http://127.0.0.1:4175/local-verify -H \"Content-Type: application/json\" -d \"{\\\\\"folderName\\\\\":\\\\\"q-002\\\\\",\\\\\"answers\\\\\":[\\\\\"red-circle.svg\\\\\",\\\\\"orange-diamond.svg\\\\\"]}\")",
+      "Bash(curl -s -o /dev/null -w \"prompt.svg HTTP %{http_code}\\\\n\" http://127.0.0.1:4175/local-files/prompt/q-001/prompt.svg)",
+      "Bash(curl -s -o /dev/null -w \"blue-square.svg HTTP %{http_code}\\\\n\" http://127.0.0.1:4175/local-files/choices/q-001/blue-square.svg)",
+      "Bash(curl -s -o /dev/null -w \"正确答案被屏蔽 HTTP %{http_code}\\\\n\" http://127.0.0.1:4175/local-files/choices/q-001/../正确答案/blue-square.svg)",
+      "Bash(pkill -f \"node server/index.js\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}, Size: %{size_download} bytes\\\\n\" http://127.0.0.1:4175/local-page)",
+      "Bash(curl -s http://127.0.0.1:4175/local-page)",
+      "Bash(pkill -9 -f \"node server/index.js\")",
+      "Bash(pkill -9 -f \"node server\")",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://127.0.0.1:4175/local-page)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\xwp\\Desktop\\huawei\\captha_adv-main\\server\\local-questions\\q-001"
+    ]
+  }
+}

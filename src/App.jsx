@@ -1,0 +1,249 @@
+import { useEffect, useMemo, useState } from "react";
+
+const STATUS = {
+  idle: "请选择答案后提交",
+  loading: "正在加载题目...",
+  verifying: "正在验证...",
+  success: "验证通过",
+  fail: "验证失败，请重试",
+  error: "请求失败，请检查服务是否启动",
+};
+
+function App() {
+  const [groups, setGroups] = useState([]);
+  const [challenge, setChallenge] = useState(null);
+  const [selectedPrompt, setSelectedPrompt] = useState("");
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [status, setStatus] = useState("loading");
+  const [resultType, setResultType] = useState("muted");
+
+  const activeGroup = useMemo(
+    () => groups.find((group) => group.prompt === selectedPrompt),
+    [groups, selectedPrompt],
+  );
+
+  useEffect(() => {
+    loadInitialData();
+  }, []);
+
+  async function loadInitialData() {
+    await Promise.all([loadGroups(), loadRandomQuestion()]);
+  }
+
+  async function loadGroups() {
+    try {
+      const response = await fetch("/local-folders");
+      if (!response.ok) throw new Error("folders_failed");
+
+      const data = await response.json();
+      setGroups(data.groups ?? []);
+    } catch {
+      setGroups([]);
+    }
+  }
+
+  async function loadRandomQuestion() {
+    setStatus("loading");
+    setResultType("muted");
+
+    try {
+      const response = await fetch("/local-challenge");
+      if (!response.ok) throw new Error("challenge_failed");
+
+      const data = await response.json();
+      applyChallenge(data);
+    } catch {
+      setChallenge(null);
+      setSelectedAnswers([]);
+      setStatus("error");
+      setResultType("error");
+    }
+  }
+
+  async function loadSpecificQuestion(promptName, folderName) {
+    setStatus("loading");
+    setResultType("muted");
+
+    try {
+      const response = await fetch(
+        `/local-challenge/${encodeURIComponent(promptName)}/${encodeURIComponent(folderName)}`,
+      );
+      if (!response.ok) throw new Error("challenge_failed");
+
+      const data = await response.json();
+      applyChallenge(data);
+    } catch {
+      setChallenge(null);
+      setSelectedAnswers([]);
+      setStatus("error");
+      setResultType("error");
+    }
+  }
+
+  function applyChallenge(nextChallenge) {
+    setChallenge(nextChallenge);
+    setSelectedPrompt(nextChallenge.promptGroup);
+    setSelectedAnswers([]);
+    setStatus("idle");
+    setResultType("muted");
+  }
+
+  function toggleAnswer(value) {
+    if (!challenge) return;
+
+    setStatus("idle");
+    setResultType("muted");
+
+    if (challenge.selectionMode === "single") {
+      setSelectedAnswers([value]);
+      return;
+    }
+
+    setSelectedAnswers((current) => (
+      current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value]
+    ));
+  }
+
+  async function submitAnswer() {
+    if (!challenge || selectedAnswers.length === 0) return;
+
+    setStatus("verifying");
+    setResultType("muted");
+
+    try {
+      const response = await fetch("/local-verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          promptGroup: challenge.promptGroup,
+          folderName: challenge.folderName,
+          answers: selectedAnswers,
+        }),
+      });
+      if (!response.ok) throw new Error("verify_failed");
+
+      const data = await response.json();
+      setStatus(data.success ? "success" : "fail");
+      setResultType(data.success ? "success" : "error");
+    } catch {
+      setStatus("error");
+      setResultType("error");
+    }
+  }
+
+  const isBusy = status === "loading" || status === "verifying";
+
+  return (
+    <main className="page">
+      <section className="demo-modal" aria-label="验证码 demo">
+        <div className="challenge-panel">
+          <div className="panel-header">
+            <div>
+              <p className="eyebrow">Captcha Demo</p>
+              <h1>本地题目验证</h1>
+            </div>
+            <button className="ghost-button" type="button" onClick={loadRandomQuestion} disabled={isBusy}>
+              随机题目
+            </button>
+          </div>
+
+          <div className="meta-row">
+            <span>{challenge ? `${challenge.promptGroup} / ${challenge.folderName}` : "未加载题目"}</span>
+            <span>{challenge?.selectionMode === "multiple" ? "多选" : "单选"}</span>
+          </div>
+
+          <div className="prompt-card">
+            {challenge?.promptImages?.length ? (
+              challenge.promptImages.map((imageUrl) => (
+                <img key={imageUrl} src={imageUrl} alt="题干" />
+              ))
+            ) : (
+              <div className="empty-state">{STATUS[status]}</div>
+            )}
+          </div>
+
+          <div className="choice-grid">
+            {(challenge?.choices ?? []).map((choice) => {
+              const isSelected = selectedAnswers.includes(choice.value);
+
+              return (
+                <button
+                  key={choice.value}
+                  className={`choice-card ${isSelected ? "selected" : ""}`}
+                  type="button"
+                  onClick={() => toggleAnswer(choice.value)}
+                  disabled={isBusy}
+                >
+                  <img src={choice.imageUrl} alt={choice.value} />
+                  <span>{choice.value}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="action-row">
+            <button
+              className="primary-button"
+              type="button"
+              onClick={submitAnswer}
+              disabled={isBusy || selectedAnswers.length === 0}
+            >
+              提交验证
+            </button>
+            <div className={`status-pill ${resultType}`}>{STATUS[status]}</div>
+          </div>
+        </div>
+
+        <aside className="selector-panel">
+          <div className="selector-header">
+            <p className="eyebrow">Question Picker</p>
+            <h2>选择题目</h2>
+            <p>先选 prompt，再选 Q1/Q2。默认进入页面会先弹出随机题目。</p>
+          </div>
+
+          <div className="selector-block">
+            <h3>Prompt</h3>
+            <div className="chip-list">
+              {groups.map((group) => (
+                <button
+                  key={group.prompt}
+                  className={`chip ${selectedPrompt === group.prompt ? "active" : ""}`}
+                  type="button"
+                  onClick={() => setSelectedPrompt(group.prompt)}
+                >
+                  {group.prompt}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="selector-block">
+            <h3>Question</h3>
+            <div className="chip-list">
+              {(activeGroup?.questions ?? []).map((question) => (
+                <button
+                  key={question.folderName}
+                  className={`chip ${
+                    challenge?.promptGroup === selectedPrompt && challenge?.folderName === question.folderName
+                      ? "active"
+                      : ""
+                  }`}
+                  type="button"
+                  onClick={() => loadSpecificQuestion(selectedPrompt, question.folderName)}
+                  disabled={isBusy}
+                >
+                  {question.folderName}
+                </button>
+              ))}
+              {!activeGroup && <span className="hint">请选择一个 prompt</span>}
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  );
+}
+
+export default App;
