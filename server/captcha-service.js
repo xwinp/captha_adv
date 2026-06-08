@@ -898,7 +898,7 @@ function cleanLocalDemoPage() {
     h2 { font-size: 22px; }
     h3 { font-size: 14px; }
     .hint { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 10px; }
-    .ghost, .primary, .chip, .choice { border: 0; cursor: pointer; transition: 160ms ease; }
+    .ghost, .primary, .chip { border: 0; cursor: pointer; transition: 160ms ease; }
     .ghost { padding: 10px 16px; border-radius: 999px; color: var(--primary); background: #e8f0ff; font-weight: 800; }
     .primary { min-width: 140px; padding: 13px 18px; border-radius: 14px; color: #fff; background: var(--primary); font-weight: 800; }
     button:disabled { cursor: not-allowed; opacity: .58; }
@@ -916,19 +916,46 @@ function cleanLocalDemoPage() {
     .prompt img { max-width: 100%; max-height: 220px; object-fit: contain; }
     .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 18px; }
     .choice {
+      position: relative;
       display: grid; gap: 10px; padding: 12px; border: 2px solid transparent; border-radius: 18px;
       background: var(--soft); text-align: center; color: var(--text); font-weight: 800;
+      cursor: zoom-in; transition: 160ms ease;
     }
     .choice:hover { transform: translateY(-2px); border-color: #c7d7fe; }
     .choice.active { border-color: var(--primary); background: #e8f0ff; }
     .choice img { width: 100%; aspect-ratio: 1 / .72; object-fit: contain; border-radius: 12px; background: #fff; }
     .choice span { overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .select-corner {
+      position: absolute; right: 12px; bottom: 38px; z-index: 2;
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 54px; min-height: 30px; padding: 6px 10px; border-radius: 999px;
+      border: 0; cursor: pointer;
+      background: rgba(255,255,255,.92); box-shadow: 0 8px 24px rgba(23,32,51,.16);
+      color: var(--primary); font-size: 12px; font-weight: 900;
+    }
+    .choice.active .select-corner { background: var(--primary); color: #fff; }
     .actions { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
     .block + .block { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
     .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
     .chip { padding: 10px 14px; border-radius: 999px; color: var(--text); background: var(--soft); font-weight: 800; }
     .chip.active { color: var(--primary); background: #e8f0ff; box-shadow: inset 0 0 0 2px var(--primary); }
     .empty { color: var(--muted); font-weight: 800; }
+    .preview {
+      position: fixed; inset: 0; z-index: 20; display: none; place-items: center;
+      padding: 28px; background: rgba(15,23,42,.62);
+    }
+    .preview.open { display: grid; }
+    .preview-card {
+      position: relative; width: min(880px, 100%); max-height: min(760px, 88vh);
+      display: grid; gap: 12px; padding: 22px; border-radius: 24px; background: #fff;
+      box-shadow: 0 30px 90px rgba(0,0,0,.34);
+    }
+    .preview-card img { max-width: 100%; max-height: 66vh; object-fit: contain; }
+    .preview-card p { color: var(--muted); text-align: center; font-weight: 800; }
+    .preview-close {
+      position: absolute; right: 14px; top: 14px; border: 0; border-radius: 999px;
+      padding: 8px 12px; background: var(--primary); color: #fff; cursor: pointer; font-weight: 800;
+    }
     @media (max-width: 900px) { .modal { grid-template-columns: 1fr; } .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
     @media (max-width: 560px) { .head, .actions { align-items: stretch; flex-direction: column; } .grid { grid-template-columns: 1fr; } }
   </style>
@@ -971,6 +998,13 @@ function cleanLocalDemoPage() {
         </div>
       </aside>
     </section>
+    <div class="preview" id="previewLayer" role="dialog" aria-modal="true">
+      <div class="preview-card" id="previewCard">
+        <button class="preview-close" id="previewClose" type="button">关闭</button>
+        <img id="previewImage" alt="" />
+        <p id="previewTitle"></p>
+      </div>
+    </div>
   </main>
   <script>
     var groups = [];
@@ -988,9 +1022,17 @@ function cleanLocalDemoPage() {
     var statusText = document.getElementById("statusText");
     var submitBtn = document.getElementById("submitBtn");
     var randomBtn = document.getElementById("randomBtn");
+    var previewLayer = document.getElementById("previewLayer");
+    var previewCard = document.getElementById("previewCard");
+    var previewClose = document.getElementById("previewClose");
+    var previewImage = document.getElementById("previewImage");
+    var previewTitle = document.getElementById("previewTitle");
 
     randomBtn.addEventListener("click", loadRandomQuestion);
     submitBtn.addEventListener("click", submitAnswer);
+    previewLayer.addEventListener("click", closePreview);
+    previewClose.addEventListener("click", closePreview);
+    previewCard.addEventListener("click", function(event) { event.stopPropagation(); });
 
     init();
 
@@ -1091,13 +1133,25 @@ function cleanLocalDemoPage() {
         return '<img src="' + escapeAttr(url) + '" alt="题干" />';
       }).join("");
       choiceGrid.innerHTML = (challenge.choices || []).map(function(choice) {
-        return '<button class="choice" type="button" data-value="' + escapeAttr(choice.value) + '">' +
+        return '<div class="choice" role="button" tabindex="0" data-value="' + escapeAttr(choice.value) + '">' +
           '<img src="' + escapeAttr(choice.imageUrl) + '" alt="' + escapeAttr(choice.value) + '" />' +
           '<span>' + escapeHtml(choice.value) + '</span>' +
-        '</button>';
+          '<button class="select-corner" type="button">选择</button>' +
+        '</div>';
       }).join("");
-      choiceGrid.querySelectorAll("button").forEach(function(button) {
-        button.addEventListener("click", function() { toggleAnswer(button, button.dataset.value); });
+      choiceGrid.querySelectorAll(".choice").forEach(function(card) {
+        card.addEventListener("click", function() { openPreview(card); });
+        card.addEventListener("keydown", function(event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPreview(card);
+          }
+        });
+        var selector = card.querySelector(".select-corner");
+        selector.addEventListener("click", function(event) {
+          event.stopPropagation();
+          toggleAnswer(card, card.dataset.value);
+        });
       });
       submitBtn.disabled = true;
     }
@@ -1118,7 +1172,28 @@ function cleanLocalDemoPage() {
           button.classList.add("active");
         }
       }
+      updateSelectLabels();
       submitBtn.disabled = selectedAnswers.length === 0;
+    }
+
+    function updateSelectLabels() {
+      choiceGrid.querySelectorAll(".choice").forEach(function(button) {
+        var label = button.querySelector(".select-corner");
+        if (label) label.textContent = button.classList.contains("active") ? "已选" : "选择";
+      });
+    }
+
+    function openPreview(button) {
+      var image = button.querySelector("img");
+      previewImage.src = image.src;
+      previewImage.alt = button.dataset.value;
+      previewTitle.textContent = button.dataset.value;
+      previewLayer.classList.add("open");
+    }
+
+    function closePreview() {
+      previewLayer.classList.remove("open");
+      previewImage.removeAttribute("src");
     }
 
     async function submitAnswer() {
@@ -1189,10 +1264,10 @@ function startCaptchaService({ localQuestionsDir } = {}) {
 
   app.get("/local-files/:promptGroup/:folderName/picture/:file", (request, response) => {
     if (!localQuestionsDir) return response.sendStatus(404);
-    const { promptGroup, folderName, file } = request.params;
-    const filePath = path.resolve(localQuestionsDir, promptGroup, folderName, "picture", file);
-    const questionDir = path.resolve(localQuestionsDir, promptGroup, folderName);
-    if (!filePath.startsWith(`${questionDir}${path.sep}`)) return response.sendStatus(403);
+    const { promptGroup, file } = request.params;
+    const filePath = path.resolve(localQuestionsDir, promptGroup, "picture", file);
+    const promptDir = path.resolve(localQuestionsDir, promptGroup);
+    if (!filePath.startsWith(`${promptDir}${path.sep}`)) return response.sendStatus(403);
     response.sendFile(filePath, (err) => { if (err) response.sendStatus(404); });
   });
 

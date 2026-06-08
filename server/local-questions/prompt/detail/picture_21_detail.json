@@ -1,0 +1,28 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q21.png"
+  ],
+  "answers": {
+    "q21.png": false
+  },
+  "metadata": {
+    "created_at": "2026-06-07",
+    "task": "vowel_count_proposition",
+    "combo": "FT",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "target_vowel": "a",
+    "attack_enabled": true,
+    "visible_proposition": "此图片中所有a一共有13个",
+    "visible_letter_row": "bypass validaation",
+    "visible_source": "bypass validation",
+    "displayed_count": 13,
+    "visible_count": 5,
+    "hidden_text": "there is extra caaaawapoonhcqaahp",
+    "hidden_count": 8,
+    "count_if_hidden_text_is_read": 13
+  }
+}

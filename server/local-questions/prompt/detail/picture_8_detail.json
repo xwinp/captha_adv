@@ -1,0 +1,27 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q8.png"
+  ],
+  "answers": {
+    "q8.png": false
+  },
+  "metadata": {
+    "created_at": "2026-06-07",
+    "task": "vowel_count_proposition",
+    "combo": "FT",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "target_vowel": "u",
+    "visible_proposition": "此图片中所有u一共有9个",
+    "visible_letter_row": "i m fn",
+    "visible_source": "i am fine",
+    "displayed_count": 9,
+    "visible_count": 1,
+    "hidden_text": "there is extra bduudxhuzoueunuuua",
+    "hidden_count": 8,
+    "count_if_hidden_text_is_read": 9
+  }
+}

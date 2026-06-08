@@ -3,8 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp"]);
-const QUESTION_FILE = "question.json";
 const PICTURE_DIR = "picture";
+const QUESTION_FILE_PATTERN = /^q\d+\.json$/i;
 
 function isDirectory(dirPath) {
   try {
@@ -29,9 +29,9 @@ function normalizeLocalPath(value) {
   return normalized;
 }
 
-function readQuestionConfig(folderPath) {
+function readQuestionConfig(questionFilePath) {
   try {
-    const raw = fs.readFileSync(path.join(folderPath, QUESTION_FILE), "utf-8");
+    const raw = fs.readFileSync(questionFilePath, "utf-8");
     const config = JSON.parse(raw);
 
     if (!config || typeof config !== "object") return null;
@@ -53,11 +53,11 @@ function readQuestionConfig(folderPath) {
   }
 }
 
-function fileExistsInside(questionDir, relativePath) {
-  const absolutePath = path.resolve(questionDir, relativePath);
-  const questionRoot = path.resolve(questionDir);
+function fileExistsInside(promptDir, relativePath) {
+  const absolutePath = path.resolve(promptDir, relativePath);
+  const promptRoot = path.resolve(promptDir);
 
-  if (!absolutePath.startsWith(`${questionRoot}${path.sep}`)) return false;
+  if (!absolutePath.startsWith(`${promptRoot}${path.sep}`)) return false;
 
   try {
     return fs.statSync(absolutePath).isFile();
@@ -66,12 +66,29 @@ function fileExistsInside(questionDir, relativePath) {
   }
 }
 
-function isValidQuestionFolder(folderPath) {
-  const config = readQuestionConfig(folderPath);
+function questionFilePath(promptDir, questionName) {
+  const normalizedName = path.basename(questionName, ".json").toLowerCase();
+  return path.join(promptDir, `${normalizedName}.json`);
+}
+
+function questionIdFromFile(fileName) {
+  return path.basename(fileName, ".json").toLowerCase();
+}
+
+function isValidQuestionFile(promptDir, fileName) {
+  if (!QUESTION_FILE_PATTERN.test(fileName)) return false;
+
+  const config = readQuestionConfig(path.join(promptDir, fileName));
   if (!config) return false;
 
   const files = [...config.prompt, ...config.question];
-  return files.every((filePath) => filePath.startsWith(`${PICTURE_DIR}/`) && fileExistsInside(folderPath, filePath));
+  return files.every((filePath) => filePath.startsWith(`${PICTURE_DIR}/`) && fileExistsInside(promptDir, filePath));
+}
+
+function isValidQuestionFolder(folderPath) {
+  const promptDir = path.dirname(folderPath);
+  const questionName = path.basename(folderPath);
+  return isValidQuestionFile(promptDir, `${questionName}.json`);
 }
 
 function scanAll(rootDir) {
@@ -84,13 +101,13 @@ function scanAll(rootDir) {
 
   for (const promptEntry of promptDirs) {
     const promptPath = path.join(rootDir, promptEntry.name);
-    const questionDirs = fs.readdirSync(promptPath, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory() && isValidQuestionFolder(path.join(promptPath, entry.name)))
-      .map((entry) => entry.name)
+    const questionFiles = fs.readdirSync(promptPath, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && isValidQuestionFile(promptPath, entry.name))
+      .map((entry) => questionIdFromFile(entry.name))
       .sort((left, right) => left.localeCompare(right));
 
-    if (questionDirs.length > 0) {
-      groups.push({ prompt: promptEntry.name, questions: questionDirs });
+    if (questionFiles.length > 0) {
+      groups.push({ prompt: promptEntry.name, questions: questionFiles });
     }
   }
 
@@ -112,10 +129,13 @@ function imageUrl(promptGroup, folderName, relativePath) {
 }
 
 function buildLocalChallenge(rootDir, promptGroup, folderName) {
-  const questionDir = path.join(rootDir, promptGroup, folderName);
-  if (!isValidQuestionFolder(questionDir)) return null;
+  const promptDir = path.join(rootDir, promptGroup);
+  const configPath = questionFilePath(promptDir, folderName);
+  const questionId = questionIdFromFile(configPath);
 
-  const config = readQuestionConfig(questionDir);
+  if (!isValidQuestionFile(promptDir, path.basename(configPath))) return null;
+
+  const config = readQuestionConfig(configPath);
   if (!config) return null;
 
   const correctAnswers = config.question
@@ -126,16 +146,16 @@ function buildLocalChallenge(rootDir, promptGroup, folderName) {
 
   return {
     promptGroup,
-    folderName,
+    folderName: questionId,
     selectionMode: correctAnswers.length === 1 ? "single" : "multiple",
     instruction: "请选择符合题干要求的图片",
-    promptImages: config.prompt.map((relativePath) => imageUrl(promptGroup, folderName, relativePath)),
+    promptImages: config.prompt.map((relativePath) => imageUrl(promptGroup, questionId, relativePath)),
     choices: config.question.map((relativePath) => {
       const value = path.posix.basename(relativePath);
 
       return {
         value,
-        imageUrl: imageUrl(promptGroup, folderName, relativePath),
+        imageUrl: imageUrl(promptGroup, questionId, relativePath),
         filePath: relativePath,
       };
     }),

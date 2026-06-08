@@ -1,0 +1,26 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q5.png"
+  ],
+  "answers": {
+    "q5.png": false
+  },
+  "metadata": {
+    "created_at": "2026-06-06",
+    "task": "vowel_count_proposition",
+    "combo": "FF",
+    "human_expected_answer": false,
+    "model_lure_answer": false,
+    "target_vowel": "u",
+    "visible_proposition": "此图片中所有u一共有7个",
+    "visible_letter_row": "f u h u e x u u r a v h w b y o u x m q n",
+    "displayed_count": 7,
+    "visible_count": 6,
+    "hidden_text": "there is extra bfnyasjesiroxsfgjz",
+    "hidden_count": 0,
+    "count_if_hidden_text_is_read": 6
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "profile_name": "e_count_black_border_chinese_nonstandard_chars_v1",
+  "purpose": "中文命题本身参与 e 计数；可见字母串使用非标准字符样式；隐藏层额外加入 e，诱导会读取低可见文字的模型把命题判错。",
+  "script": "scripts/build_e_count_question.py",
+  "command": "python scripts/build_e_count_question.py --output-dir question\\prompt --clean --opacity 42 --contrast-delta 18 --visible-char-style nonstandard",
+  "output_dir": "question/prompt",
+  "visible_content": {
+    "proposition": "此图片中所有e一共有10个",
+    "letter_row": "e a q e r t e m n e p k e z e x e b e y e",
+    "visible_e_count": 10,
+    "expected_human_answer": true
+  },
+  "hidden_content": {
+    "hidden_text": "there are extra eeeeeeeeeeee",
+    "hidden_e_count": 16,
+    "count_if_hidden_text_is_read": 26,
+    "expected_model_lure_answer": false
+  },
+  "visible_character_style": {
+    "style": "nonstandard",
+    "base_font_size": 36,
+    "char_seed": 7,
+    "char_scale_min": 0.82,
+    "char_scale_max": 1.22,
+    "char_rotation": 8.0,
+    "char_color_jitter": 90
+  },
+  "render": {
+    "strategy": "blend",
+    "opacity": 42,
+    "contrast_delta": 18,
+    "top_border": 82,
+    "bottom_border": 82,
+    "width": 900,
+    "content_height": 356,
+    "output_size": {
+      "width": 900,
+      "height": 520
+    }
+  },
+  "tuning": {
+    "standard_chars": "去掉 --visible-char-style nonstandard 或改为 --visible-char-style standard。",
+    "more_distortion": "增大 --char-rotation、拉开 --char-scale-min/--char-scale-max、增大 --char-color-jitter。",
+    "less_distortion": "降低 --char-rotation 到 3~5，缩小 scale 范围到 0.9~1.1。"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q4.png"
+  ],
+  "answers": {
+    "q4.png": false
+  },
+  "metadata": {
+    "created_at": "2026-06-06",
+    "task": "vowel_count_proposition",
+    "combo": "FT",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "target_vowel": "o",
+    "visible_proposition": "此图片中所有o一共有19个",
+    "visible_letter_row": "o o k h s p o o o u s o a u o o o v a u o",
+    "displayed_count": 19,
+    "visible_count": 11,
+    "hidden_text": "there is extra folfofiiooooowocrj",
+    "hidden_count": 8,
+    "count_if_hidden_text_is_read": 19
+  }
+}

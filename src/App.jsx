@@ -14,6 +14,7 @@ function App() {
   const [challenge, setChallenge] = useState(null);
   const [selectedPrompt, setSelectedPrompt] = useState("");
   const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [previewImage, setPreviewImage] = useState(null);
   const [status, setStatus] = useState("loading");
   const [resultType, setResultType] = useState("muted");
 
@@ -84,6 +85,7 @@ function App() {
     setChallenge(nextChallenge);
     setSelectedPrompt(nextChallenge.promptGroup);
     setSelectedAnswers([]);
+    setPreviewImage(null);
     setStatus("idle");
     setResultType("muted");
   }
@@ -169,16 +171,36 @@ function App() {
               const isSelected = selectedAnswers.includes(choice.value);
 
               return (
-                <button
+                <div
                   key={choice.value}
-                  className={`choice-card ${isSelected ? "selected" : ""}`}
-                  type="button"
-                  onClick={() => toggleAnswer(choice.value)}
-                  disabled={isBusy}
+                  className={`choice-card ${isSelected ? "selected" : ""} ${isBusy ? "is-disabled" : ""}`}
+                  role="button"
+                  tabIndex={isBusy ? -1 : 0}
+                  onClick={() => {
+                    if (!isBusy) setPreviewImage(choice);
+                  }}
+                  onKeyDown={(event) => {
+                    if ((event.key === "Enter" || event.key === " ") && !isBusy) {
+                      event.preventDefault();
+                      setPreviewImage(choice);
+                    }
+                  }}
                 >
                   <img src={choice.imageUrl} alt={choice.value} />
                   <span>{choice.value}</span>
-                </button>
+                  <button
+                    className="select-corner"
+                    type="button"
+                    aria-label={`选择 ${choice.value}`}
+                    disabled={isBusy}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      toggleAnswer(choice.value);
+                    }}
+                  >
+                    {isSelected ? "已选" : "选择"}
+                  </button>
+                </div>
               );
             })}
           </div>
@@ -242,6 +264,18 @@ function App() {
           </div>
         </aside>
       </section>
+
+      {previewImage && (
+        <div className="image-preview" role="dialog" aria-modal="true" onClick={() => setPreviewImage(null)}>
+          <div className="image-preview-card" onClick={(event) => event.stopPropagation()}>
+            <button className="preview-close" type="button" onClick={() => setPreviewImage(null)}>
+              关闭
+            </button>
+            <img src={previewImage.imageUrl} alt={previewImage.value} />
+            <p>{previewImage.value}</p>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

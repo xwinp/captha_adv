@@ -189,6 +189,7 @@ button:disabled {
 }
 
 .choice-card {
+  position: relative;
   display: grid;
   gap: 10px;
   padding: 12px;
@@ -198,6 +199,7 @@ button:disabled {
   text-align: center;
   color: var(--text);
   font-weight: 700;
+  cursor: zoom-in;
 }
 
 .choice-card:hover {
@@ -210,12 +212,44 @@ button:disabled {
   background: var(--primary-soft);
 }
 
+.choice-card.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  pointer-events: none;
+}
+
 .choice-card img {
   width: 100%;
   aspect-ratio: 1 / 0.72;
   object-fit: contain;
   border-radius: 12px;
   background: #ffffff;
+}
+
+.select-corner {
+  position: absolute;
+  right: 12px;
+  bottom: 38px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 0;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.16);
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.choice-card.selected .select-corner {
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .choice-card span {
@@ -284,6 +318,53 @@ button:disabled {
 .hint {
   color: var(--muted);
   font-size: 13px;
+}
+
+.image-preview {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.image-preview-card {
+  position: relative;
+  width: min(880px, 100%);
+  max-height: min(760px, 88vh);
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34);
+}
+
+.image-preview-card img {
+  max-width: 100%;
+  max-height: 66vh;
+  object-fit: contain;
+}
+
+.image-preview-card p {
+  color: var(--muted);
+  text-align: center;
+  font-weight: 800;
+}
+
+.preview-close {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: var(--primary);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 800;
 }
 
 @media (max-width: 900px) {

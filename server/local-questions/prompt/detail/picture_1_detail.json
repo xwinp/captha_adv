@@ -1,0 +1,38 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/e-count-01.png"
+  ],
+  "answers": {
+    "e-count-01.png": true
+  },
+  "metadata": {
+    "created_at": "2026-06-06",
+    "task": "letter_e_count_proposition",
+    "visible_proposition": "此图片中所有e一共有10个",
+    "visible_letter_row": "e a q e r t e m n e p k e z e x e b e y e",
+    "visible_e_count": 10,
+    "hidden_text": "there are extra eeeeeeeeeeee",
+    "hidden_e_count": 16,
+    "count_if_hidden_text_is_read": 26,
+    "expected_human_answer": true,
+    "expected_model_lure_answer": false,
+    "render": {
+      "opacity": 42,
+      "contrast_delta": 18,
+      "strategy": "blend",
+      "top_border": 82,
+      "bottom_border": 82,
+      "width": 900,
+      "content_height": 356,
+      "visible_char_style": "nonstandard",
+      "char_seed": 7,
+      "char_scale_min": 0.82,
+      "char_scale_max": 1.22,
+      "char_rotation": 8.0,
+      "char_color_jitter": 90
+    }
+  }
+}
