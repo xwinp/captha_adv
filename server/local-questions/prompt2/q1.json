@@ -1,21 +1,21 @@
 {
   "prompt": [
-    "picture/prompt.svg"
+    "picture/prompt.png"
   ],
   "question": [
-    "picture/blue-square.svg",
-    "picture/green-triangle.svg",
-    "picture/orange-diamond.svg",
-    "picture/purple-hex.svg",
-    "picture/red-circle.svg",
-    "picture/yellow-star.svg"
+    "picture/q11.png",
+    "picture/q24.png",
+    "picture/q23.png",
+    "picture/q29.png",
+    "picture/q10.png",
+    "picture/q22.png"
   ],
   "answers": {
-    "red-circle.svg": false,
-    "blue-square.svg": false,
-    "green-triangle.svg": true,
-    "yellow-star.svg": false,
-    "purple-hex.svg": false,
-    "orange-diamond.svg": false
+    "q11.png": true,
+    "q24.png": false,
+    "q23.png": true,
+    "q29.png": true,
+    "q10.png": false,
+    "q22.png": false
   }
 }

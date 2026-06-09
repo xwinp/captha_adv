@@ -1,0 +1,36 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q30.png"
+  ],
+  "answers": {
+    "q30.png": false
+  },
+  "metadata": {
+    "created_at": "2026-06-09",
+    "task": "hanzi_existence_single",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "base_char": "进",
+    "image": "picture/q30.png",
+    "font": "C:\\Windows\\Fonts\\simfang.ttf",
+    "font_size": 140,
+    "canvas_size": 192,
+    "rotation_degrees": 26.3,
+    "mutation": "add",
+    "stroke": {
+      "x1": 125,
+      "y1": 75,
+      "x2": 67,
+      "y2": 133,
+      "width": 9
+    },
+    "changed_pixels": 595,
+    "nearest_reference_char": "进",
+    "nearest_distance": 0.015326499938964844,
+    "verify_scope": "common",
+    "guarantee": "True images are normal rendered Hanzi. False images are one-stroke mutations rejected when visually too close to the selected rendered reference set; this is not a proof of nonexistence across all historical or private-use glyphs."
+  }
+}

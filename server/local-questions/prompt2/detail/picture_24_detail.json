@@ -1,0 +1,36 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q24.png"
+  ],
+  "answers": {
+    "q24.png": false
+  },
+  "metadata": {
+    "created_at": "2026-06-09",
+    "task": "hanzi_existence_single",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "base_char": "整",
+    "image": "picture/q24.png",
+    "font": "C:\\Windows\\Fonts\\STXIHEI.TTF",
+    "font_size": 145,
+    "canvas_size": 192,
+    "rotation_degrees": 10.92,
+    "mutation": "add",
+    "stroke": {
+      "x1": 74,
+      "y1": 47,
+      "x2": 158,
+      "y2": 131,
+      "width": 9
+    },
+    "changed_pixels": 738,
+    "nearest_reference_char": "整",
+    "nearest_distance": 0.019187750294804573,
+    "verify_scope": "common",
+    "guarantee": "True images are normal rendered Hanzi. False images are one-stroke mutations rejected when visually too close to the selected rendered reference set; this is not a proof of nonexistence across all historical or private-use glyphs."
+  }
+}
