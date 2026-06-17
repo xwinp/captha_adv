@@ -267,6 +267,38 @@ button:disabled {
   margin-top: 18px;
 }
 
+.inline-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.inline-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 190px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.inline-stat span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inline-stat strong {
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
 .status-pill.success {
   color: var(--success);
   background: var(--success-soft);

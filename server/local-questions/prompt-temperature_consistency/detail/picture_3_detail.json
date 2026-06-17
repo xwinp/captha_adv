@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q3.png"
+  ],
+  "answers": {
+    "q3.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "temperature_consistency",
+    "sample_id": "qwen_003_temperature_consistency_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Heat transfer is completely broken.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic outdoor scene of a snowman standing on a grassy lawn under bright afternoon sunlight. The snowman's surface shows visible water trickles running down its sides, and a shallow, irregular puddle has formed at its base. Long, warm shadows cast across the grass, highly detailed, no text, no watermark.",
+    "rationale": "Direct sunlight and warm ambient temperatures cause snow to melt into water trickles and puddles at the base.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/temperature_consistency/images/003__temperature_consistency__positive__photorealistic_outdoor_scene_of_a_snowman_standing_on_a_grassy_lawn_under_bright_afternoon.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/temperature_consistency/qwen_003_temperature_consistency_positive/adv.png"
+  }
+}

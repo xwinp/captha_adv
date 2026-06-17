@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q2.png"
+  ],
+  "answers": {
+    "q2.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "mirror_reflection",
+    "sample_id": "qwen_002_mirror_reflection_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Consistent reflection.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic kitchen counter with exactly five identical red apples arranged in a straight line facing a large vanity mirror, the mirror reflection displays only four apples in the row, sharp overhead lighting, high detail, no text, no watermark.",
+    "rationale": "The number of apples in the reflection does not match the actual physical count on the counter.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/mirror_reflection/images/002__mirror_reflection__negative__a_photorealistic_kitchen_counter_with_exactly_five_identical_red_apples_arranged_in_a_stra.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/mirror_reflection/qwen_002_mirror_reflection_negative/adv.png"
+  }
+}

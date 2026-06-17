@@ -1,0 +1,113 @@
+{
+  "script": "scripts/build_questions.py",
+  "items_per_question": 4,
+  "num_questions": 3,
+  "start_index": 1,
+  "last_question_index": 3,
+  "seed": 1835130623,
+  "constraints": {
+    "at_least_one_human_true": true,
+    "at_least_one_human_model_mismatch": true
+  },
+  "groups": [
+    {
+      "q": 1,
+      "images": [
+        {
+          "picture_number": 1,
+          "image": "picture/q1.png",
+          "detail": "detail/picture_1_detail.json",
+          "human_answer": true,
+          "model_lure_answer": false
+        },
+        {
+          "picture_number": 6,
+          "image": "picture/q6.png",
+          "detail": "detail/picture_6_detail.json",
+          "human_answer": false,
+          "model_lure_answer": true
+        },
+        {
+          "picture_number": 4,
+          "image": "picture/q4.png",
+          "detail": "detail/picture_4_detail.json",
+          "human_answer": false,
+          "model_lure_answer": true
+        },
+        {
+          "picture_number": 3,
+          "image": "picture/q3.png",
+          "detail": "detail/picture_3_detail.json",
+          "human_answer": true,
+          "model_lure_answer": false
+        }
+      ]
+    },
+    {
+      "q": 2,
+      "images": [
+        {
+          "picture_number": 3,
+          "image": "picture/q3.png",
+          "detail": "detail/picture_3_detail.json",
+          "human_answer": true,
+          "model_lure_answer": false
+        },
+        {
+          "picture_number": 1,
+          "image": "picture/q1.png",
+          "detail": "detail/picture_1_detail.json",
+          "human_answer": true,
+          "model_lure_answer": false
+        },
+        {
+          "picture_number": 2,
+          "image": "picture/q2.png",
+          "detail": "detail/picture_2_detail.json",
+          "human_answer": true,
+          "model_lure_answer": false
+        },
+        {
+          "picture_number": 4,
+          "image": "picture/q4.png",
+          "detail": "detail/picture_4_detail.json",
+          "human_answer": false,
+          "model_lure_answer": true
+        }
+      ]
+    },
+    {
+      "q": 3,
+      "images": [
+        {
+          "picture_number": 3,
+          "image": "picture/q3.png",
+          "detail": "detail/picture_3_detail.json",
+          "human_answer": true,
+          "model_lure_answer": false
+        },
+        {
+          "picture_number": 5,
+          "image": "picture/q5.png",
+          "detail": "detail/picture_5_detail.json",
+          "human_answer": false,
+          "model_lure_answer": true
+        },
+        {
+          "picture_number": 2,
+          "image": "picture/q2.png",
+          "detail": "detail/picture_2_detail.json",
+          "human_answer": true,
+          "model_lure_answer": false
+        },
+        {
+          "picture_number": 4,
+          "image": "picture/q4.png",
+          "detail": "detail/picture_4_detail.json",
+          "human_answer": false,
+          "model_lure_answer": true
+        }
+      ]
+    }
+  ]
+}

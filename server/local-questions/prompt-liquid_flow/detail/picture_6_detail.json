@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q6.png"
+  ],
+  "answers": {
+    "q6.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "liquid_flow",
+    "sample_id": "qwen_008_liquid_flow_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Looks completely normal.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic garden scene with a green hose spraying a continuous arc of water. The water arc suddenly fractures into individual droplets that remain completely suspended in mid-air, ignoring momentum and gravity, soft focus background, no text, no watermark.",
+    "rationale": "Water droplets must follow a parabolic trajectory and fall due to gravity, not hover stationary.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/liquid_flow/images/008__liquid_flow__negative__a_photorealistic_garden_scene_with_a_green_hose_spraying_a_continuous_arc_of_water_the_wat.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/liquid_flow/qwen_008_liquid_flow_negative/adv.png"
+  }
+}

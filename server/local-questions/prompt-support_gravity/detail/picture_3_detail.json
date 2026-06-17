@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q3.png"
+  ],
+  "answers": {
+    "q3.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "support_gravity",
+    "sample_id": "qwen_003_support_gravity_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Unnatural deformation.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic outdoor forest scene featuring a heavy leather backpack hanging by its top handle from a thick, horizontal tree branch. The branch exhibits a slight downward bend exactly at the hanging point, indicating realistic weight distribution and elastic response. The ground below shows dappled sunlight. High detail, no text, no watermark.",
+    "rationale": "The tree branch bends downward precisely where the weight is applied, demonstrating correct elastic response and gravity-driven load bearing.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/support_gravity/images/003__support_gravity__positive__a_photorealistic_outdoor_forest_scene_featuring_a_heavy_leather_backpack_hanging_by_its_to.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/support_gravity/qwen_003_support_gravity_positive/adv.png"
+  }
+}

@@ -15,6 +15,7 @@ function App() {
   const [selectedPrompt, setSelectedPrompt] = useState("");
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
+  const [imageStats, setImageStats] = useState([]);
   const [status, setStatus] = useState("loading");
   const [resultType, setResultType] = useState("muted");
 
@@ -56,6 +57,7 @@ function App() {
     } catch {
       setChallenge(null);
       setSelectedAnswers([]);
+      setImageStats([]);
       setStatus("error");
       setResultType("error");
     }
@@ -76,6 +78,7 @@ function App() {
     } catch {
       setChallenge(null);
       setSelectedAnswers([]);
+      setImageStats([]);
       setStatus("error");
       setResultType("error");
     }
@@ -85,6 +88,7 @@ function App() {
     setChallenge(nextChallenge);
     setSelectedPrompt(nextChallenge.promptGroup);
     setSelectedAnswers([]);
+    setImageStats([]);
     setPreviewImage(null);
     setStatus("idle");
     setResultType("muted");
@@ -95,11 +99,6 @@ function App() {
 
     setStatus("idle");
     setResultType("muted");
-
-    if (challenge.selectionMode === "single") {
-      setSelectedAnswers([value]);
-      return;
-    }
 
     setSelectedAnswers((current) => (
       current.includes(value)
@@ -129,10 +128,31 @@ function App() {
       const data = await response.json();
       setStatus(data.success ? "success" : "fail");
       setResultType(data.success ? "success" : "error");
+      loadCurrentImageStats().catch(() => setImageStats([]));
     } catch {
       setStatus("error");
       setResultType("error");
     }
+  }
+
+  async function loadCurrentImageStats() {
+    if (!challenge) return;
+
+    const response = await fetch("/local-stats");
+    if (!response.ok) throw new Error("stats_failed");
+
+    const data = await response.json();
+    const rows = data.images ?? [];
+    setImageStats(
+      rows.filter((row) => (
+        row.promptGroup === challenge.promptGroup
+        && row.folderName === challenge.folderName
+      )),
+    );
+  }
+
+  function formatPercent(value) {
+    return typeof value === "number" ? `${(value * 100).toFixed(1)}%` : "-";
   }
 
   const isBusy = status === "loading" || status === "verifying";
@@ -215,6 +235,16 @@ function App() {
               提交验证
             </button>
             <div className={`status-pill ${resultType}`}>{STATUS[status]}</div>
+            {imageStats.length > 0 && (
+              <div className="inline-stats" aria-label="当前题目每张图片正确率">
+                {imageStats.map((stat) => (
+                  <span key={stat.key} className="inline-stat">
+                    <span>{stat.value}</span>
+                    <strong>{formatPercent(stat.accuracy)}</strong>
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q5.png"
+  ],
+  "answers": {
+    "q5.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "liquid_flow",
+    "sample_id": "qwen_007_liquid_flow_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Defies natural gravity.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic food photography shot of thick olive oil being drizzled from a bottle onto a glass bowl of mixed greens. The oil forms continuous, viscous ribbons that correctly cling to leaf surfaces and pool at the bowl base, bright lighting, no text, no watermark.",
+    "rationale": "The oil viscosity, adhesion to leaves, and pooling behavior accurately reflect real fluid dynamics.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/liquid_flow/images/007__liquid_flow__positive__a_photorealistic_food_photography_shot_of_thick_olive_oil_being_drizzled_from_a_bottle_ont.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/liquid_flow/qwen_007_liquid_flow_positive/adv.png"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q4.png"
+  ],
+  "answers": {
+    "q4.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "support_gravity",
+    "sample_id": "qwen_005_support_gravity_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Defies gravity.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic close-up of a clear glass half-filled with water, resting on a wooden plank that is tilted at a noticeable thirty-degree angle. The water surface inside the glass remains perfectly horizontal, parallel to the ground, while the glass base conforms tightly to the angled plank. Studio lighting, high detail, no text, no watermark.",
+    "rationale": "The liquid surface correctly aligns with the horizontal gravitational equipotential plane, independent of the tilted container's angle.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/support_gravity/images/005__support_gravity__positive__a_photorealistic_close_up_of_a_clear_glass_half_filled_with_water_resting_on_a_wooden_plan.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/support_gravity/qwen_005_support_gravity_positive/adv.png"
+  }
+}

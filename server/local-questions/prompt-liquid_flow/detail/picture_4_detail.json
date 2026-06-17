@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q4.png"
+  ],
+  "answers": {
+    "q4.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "liquid_flow",
+    "sample_id": "qwen_005_liquid_flow_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Clearly violates physics.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic nature scene of a mountain stream cascading over mossy stepped rocks. Water flows downstream following the terrain, creating accurate white-water splashes, mist, and downstream ripples, natural daylight, no text, no watermark.",
+    "rationale": "The water correctly follows gravity, terrain contours, and momentum conservation in its flow and splashes.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/liquid_flow/images/005__liquid_flow__positive__a_photorealistic_nature_scene_of_a_mountain_stream_cascading_over_mossy_stepped_rocks_wate.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/liquid_flow/qwen_005_liquid_flow_positive/adv.png"
+  }
+}

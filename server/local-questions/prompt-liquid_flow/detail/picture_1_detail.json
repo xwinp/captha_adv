@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q1.png"
+  ],
+  "answers": {
+    "q1.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "liquid_flow",
+    "sample_id": "qwen_001_liquid_flow_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Defies natural gravity.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic scene of clear water pouring from a tilted glass pitcher onto a slanted slate tile. The water spreads evenly, pools at the lower edge, and drips downward with natural surface tension and accurate gravity, high detail, no text, no watermark.",
+    "rationale": "The water correctly follows the slope, pools at the lowest point, and drips downward as expected.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/liquid_flow/images/001__liquid_flow__positive__a_photorealistic_scene_of_clear_water_pouring_from_a_tilted_glass_pitcher_onto_a_slanted_s.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/liquid_flow/qwen_001_liquid_flow_positive/adv.png"
+  }
+}

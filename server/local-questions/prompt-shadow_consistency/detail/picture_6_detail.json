@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q6.png"
+  ],
+  "answers": {
+    "q6.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "shadow_consistency",
+    "sample_id": "qwen_009_shadow_consistency_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Shadows are perfectly logical.",
+    "prompt": "Is this scene physically reasonable?",
+    "reference": "A photorealistic art gallery room with a single large window on the left wall, featuring a central marble pedestal with a classical statue and a framed canvas leaning against the right wall, where the statue casts a shadow to the right but the leaning canvas casts a shadow to the left, no text, high detail.",
+    "rationale": "Objects on the same side of a single window cast shadows toward opposite directions, which is impossible under one light source.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/shadow_consistency/images/009__shadow_consistency__negative__a_photorealistic_art_gallery_room_with_a_single_large_window_on_the_left_wall_featuring_a.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/shadow_consistency/qwen_009_shadow_consistency_negative/adv.png"
+  }
+}

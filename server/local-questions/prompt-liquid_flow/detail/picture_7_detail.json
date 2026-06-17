@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q7.png"
+  ],
+  "answers": {
+    "q7.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "liquid_flow",
+    "sample_id": "qwen_009_liquid_flow_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Clearly violates physics.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic indoor window scene during a cold evening. Condensation droplets form on the glass, coalesce, and slide downward in vertical paths, merging correctly and leaving faint moisture trails, warm ambient light, no text, no watermark.",
+    "rationale": "The condensation correctly coalesces, follows gravity downward, and leaves realistic moisture trails on the glass.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/liquid_flow/images/009__liquid_flow__positive__a_photorealistic_indoor_window_scene_during_a_cold_evening_condensation_droplets_form_on_t.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/liquid_flow/qwen_009_liquid_flow_positive/adv.png"
+  }
+}

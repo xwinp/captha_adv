@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q8.png"
+  ],
+  "answers": {
+    "q8.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "temperature_consistency",
+    "sample_id": "qwen_009_temperature_consistency_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Heat transfer is physically impossible.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic indoor scene of a ceramic teacup sitting on a wooden windowsill covered in fresh white snow. The snow directly beneath and immediately surrounding the cup has completely melted into a clear, shallow puddle, while the untouched snow a few inches away remains pristine and fluffy. Soft daylight, high detail, no text, no watermark.",
+    "rationale": "A hot cup naturally conducts heat to the snow beneath it, melting a localized puddle while leaving distant snow intact.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/temperature_consistency/images/009__temperature_consistency__positive__photorealistic_indoor_scene_of_a_ceramic_teacup_sitting_on_a_wooden_windowsill_covered_in.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/temperature_consistency/qwen_009_temperature_consistency_positive/adv.png"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "output_root": "question/prompt-support_gravity",
+  "task": "cotta_physical_reasoning",
+  "category": "support_gravity",
+  "category_description": "Scenes where objects should obey support, suspension, balance, and gravity constraints.",
+  "count": 7,
+  "image_source": "CoTTA adv.png",
+  "question_files_generated": false
+}

@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q1.png"
+  ],
+  "answers": {
+    "q1.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "shadow_consistency",
+    "sample_id": "qwen_000_shadow_consistency_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Shadows are inconsistent.",
+    "prompt": "Is this scene physically reasonable?",
+    "reference": "A photorealistic park scene at sunset with a wooden bench under a large oak tree, a person sitting, and a bicycle parked nearby, all casting long, parallel shadows pointing directly east, consistent with a low western sun, soft ambient lighting, highly detailed, no text, no watermark.",
+    "rationale": "All objects cast shadows in the same eastward direction with proportional lengths matching a single low-angle light source.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/shadow_consistency/images/000__shadow_consistency__positive__a_photorealistic_park_scene_at_sunset_with_a_wooden_bench_under_a_large_oak_tree_a_person.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/shadow_consistency/qwen_000_shadow_consistency_positive/adv.png"
+  }
+}

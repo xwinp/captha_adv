@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q3.png"
+  ],
+  "answers": {
+    "q3.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "mirror_reflection",
+    "sample_id": "qwen_004_mirror_reflection_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Perfectly mirrored.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic dining table featuring a white porcelain teacup with its handle positioned on the right side, the overhead mirror reflects the cup but incorrectly places the handle on the right side as well, natural window light, high detail, no text, no watermark.",
+    "rationale": "The mirror reflection fails to reverse the lateral position of the teacup handle.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/mirror_reflection/images/004__mirror_reflection__negative__a_photorealistic_dining_table_featuring_a_white_porcelain_teacup_with_its_handle_positione.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/mirror_reflection/qwen_004_mirror_reflection_negative/adv.png"
+  }
+}

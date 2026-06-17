@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q3.png"
+  ],
+  "answers": {
+    "q3.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "liquid_flow",
+    "sample_id": "qwen_003_liquid_flow_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Defies natural gravity.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic macro shot of whole milk being poured into a black ceramic mug. The milk sinks slightly, creates realistic turbulent swirls with dark liquid, and forms accurate meniscus curves at the edges, studio lighting, no text, no watermark.",
+    "rationale": "The milk density difference, turbulent mixing, and meniscus shape all follow standard fluid mechanics.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/liquid_flow/images/003__liquid_flow__positive__a_photorealistic_macro_shot_of_whole_milk_being_poured_into_a_black_ceramic_mug_the_milk_s.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/liquid_flow/qwen_003_liquid_flow_positive/adv.png"
+  }
+}

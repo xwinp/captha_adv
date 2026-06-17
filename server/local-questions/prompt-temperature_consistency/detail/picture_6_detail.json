@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q6.png"
+  ],
+  "answers": {
+    "q6.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "temperature_consistency",
+    "sample_id": "qwen_007_temperature_consistency_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Thermodynamics are clearly broken.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic close-up of a stack of fluffy pancakes on a ceramic plate. A rectangular pat of butter sits on top, partially melted into a glossy golden liquid pool that drips down the sides. Gentle steam rises from the warm stack. Soft morning light, high texture detail, no text, no watermark.",
+    "rationale": "Warm pancakes naturally transfer heat to butter, causing it to melt into a liquid pool while emitting gentle steam.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/temperature_consistency/images/007__temperature_consistency__positive__photorealistic_close_up_of_a_stack_of_fluffy_pancakes_on_a_ceramic_plate_a_rectangular_pat.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/temperature_consistency/qwen_007_temperature_consistency_positive/adv.png"
+  }
+}

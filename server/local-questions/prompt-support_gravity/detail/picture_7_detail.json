@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q7.png"
+  ],
+  "answers": {
+    "q7.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "support_gravity",
+    "sample_id": "qwen_008_support_gravity_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Naturally balanced pose.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic studio still life showing a tall, slender glass vase filled with dark sand. The entire vase is leaning sharply at a forty-five-degree angle to the right, yet its small circular base remains completely flat and stationary on a level tabletop without tipping. Soft directional lighting, high detail, no text, no watermark.",
+    "rationale": "The leaning vase shifts its center of mass well outside the narrow base footprint, making it physically impossible to remain stationary without falling.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/support_gravity/images/008__support_gravity__negative__a_photorealistic_studio_still_life_showing_a_tall_slender_glass_vase_filled_with_dark_sand.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/support_gravity/qwen_008_support_gravity_negative/adv.png"
+  }
+}

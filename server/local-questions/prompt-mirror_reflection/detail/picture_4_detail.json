@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q4.png"
+  ],
+  "answers": {
+    "q4.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "mirror_reflection",
+    "sample_id": "qwen_005_mirror_reflection_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Defies physics.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic hallway with a vintage bicycle leaning against a tiled wall, the large convex mirror behind it accurately reflects the reversed orientation of the pedals and chain guard, warm hallway lighting, high detail, no text, no watermark.",
+    "rationale": "The reflection correctly mirrors the asymmetrical mechanical components of the bicycle.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/mirror_reflection/images/005__mirror_reflection__positive__a_photorealistic_hallway_with_a_vintage_bicycle_leaning_against_a_tiled_wall_the_large_con.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/mirror_reflection/qwen_005_mirror_reflection_positive/adv.png"
+  }
+}

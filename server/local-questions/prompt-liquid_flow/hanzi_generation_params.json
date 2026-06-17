@@ -1,0 +1,9 @@
+{
+  "output_root": "question/prompt-liquid_flow",
+  "task": "cotta_physical_reasoning",
+  "category": "liquid_flow",
+  "category_description": "Scenes where water, milk, tea, rain, or other liquids should flow in physically plausible directions.",
+  "count": 7,
+  "image_source": "CoTTA adv.png",
+  "question_files_generated": false
+}

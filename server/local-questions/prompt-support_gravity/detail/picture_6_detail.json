@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q6.png"
+  ],
+  "answers": {
+    "q6.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "support_gravity",
+    "sample_id": "qwen_007_support_gravity_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Structurally flawed.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic miniature landscape featuring a suspension bridge model spanning a small ravine. The main support cables form smooth, natural catenary curves sagging under tension, with evenly spaced vertical hangers connecting to the flat road deck below. Realistic terrain, high detail, no text, no watermark.",
+    "rationale": "The cables correctly form catenary curves under uniform load, and the vertical hangers distribute tension appropriately to support the deck.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/support_gravity/images/007__support_gravity__positive__a_photorealistic_miniature_landscape_featuring_a_suspension_bridge_model_spanning_a_small.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/support_gravity/qwen_007_support_gravity_positive/adv.png"
+  }
+}

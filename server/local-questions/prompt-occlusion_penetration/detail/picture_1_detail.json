@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q1.png"
+  ],
+  "answers": {
+    "q1.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "occlusion_penetration",
+    "sample_id": "qwen_001_occlusion_penetration_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Physically impossible scene.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic macro shot of a silver pocket watch resting on a polished oak desk, the watch chain drapes naturally over the edge, casting a sharp accurate shadow on the wood grain, no text, no watermark.",
+    "rationale": "The chain correctly rests on top of the wood and casts a grounded contact shadow that matches the lighting direction.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/occlusion_penetration/images/001__occlusion_penetration__positive__photorealistic_macro_shot_of_a_silver_pocket_watch_resting_on_a_polished_oak_desk_the_watc.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/occlusion_penetration/qwen_001_occlusion_penetration_positive/adv.png"
+  }
+}

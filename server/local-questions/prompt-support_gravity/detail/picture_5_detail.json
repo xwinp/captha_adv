@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q5.png"
+  ],
+  "answers": {
+    "q5.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "support_gravity",
+    "sample_id": "qwen_006_support_gravity_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Realistic load distribution.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic workshop scene showing a heavy iron blacksmith anvil resting directly on a standard thin plastic patio chair. The chair's seat and legs show absolutely no bending, sagging, or structural deformation despite the extreme weight placed on it. Even indoor lighting, high detail, no text, no watermark.",
+    "rationale": "The immense weight of the iron anvil would instantly crush or severely deform the thin plastic chair, making the rigid structure impossible.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/support_gravity/images/006__support_gravity__negative__a_photorealistic_workshop_scene_showing_a_heavy_iron_blacksmith_anvil_resting_directly_on.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/support_gravity/qwen_006_support_gravity_negative/adv.png"
+  }
+}

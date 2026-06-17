@@ -8,3 +8,5 @@ challenge*.html
 home.html
 goods.html
 custom.html
+server/local-stats.json
+server/local-stats.json.tmp

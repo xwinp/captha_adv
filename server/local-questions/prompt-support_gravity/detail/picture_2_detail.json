@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q2.png"
+  ],
+  "answers": {
+    "q2.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "support_gravity",
+    "sample_id": "qwen_001_support_gravity_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Physically impossible scene.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic modern gallery interior featuring a heavy bronze geometric sculpture suspended from a single thin steel cable. The cable extends upward to a reinforced concrete ceiling beam and appears taut with slight elastic stretch. The sculpture hangs motionless, centered directly below the anchor point. Natural daylight, high detail, no text, no watermark.",
+    "rationale": "The cable aligns vertically with the sculpture's center of mass, showing appropriate tension and proper gravitational load distribution.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/support_gravity/images/001__support_gravity__positive__a_photorealistic_modern_gallery_interior_featuring_a_heavy_bronze_geometric_sculpture_susp.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/support_gravity/qwen_001_support_gravity_positive/adv.png"
+  }
+}

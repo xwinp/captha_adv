@@ -1,0 +1,9 @@
+{
+  "output_root": "question/prompt-occlusion_penetration",
+  "task": "cotta_physical_reasoning",
+  "category": "occlusion_penetration",
+  "category_description": "Scenes where objects should not pass through solid surfaces or occupy impossible positions.",
+  "count": 7,
+  "image_source": "CoTTA adv.png",
+  "question_files_generated": false
+}

@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q1.png"
+  ],
+  "answers": {
+    "q1.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "temperature_consistency",
+    "sample_id": "qwen_000_temperature_consistency_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Looks completely reasonable.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic close-up of a ceramic bowl filled with steaming hot soup, with a stainless steel spoon resting inside. The bowl's surface shows visible rising steam, but the exposed handle of the spoon is completely encased in thick, jagged ice crystals and frost. Soft natural lighting, high detail, photorealistic style, no text, no watermark.",
+    "rationale": "The spoon handle cannot accumulate thick frost while submerged in steaming hot liquid due to conductive heat transfer.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/temperature_consistency/images/000__temperature_consistency__negative__photorealistic_close_up_of_a_ceramic_bowl_filled_with_steaming_hot_soup_with_a_stainless_s.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/temperature_consistency/qwen_000_temperature_consistency_negative/adv.png"
+  }
+}

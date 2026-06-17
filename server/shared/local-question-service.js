@@ -176,7 +176,7 @@ function getRandomChallenge(rootDir) {
 
 function verifyLocalAnswer(rootDir, promptGroup, folderName, submittedAnswers) {
   const challenge = buildLocalChallenge(rootDir, promptGroup, folderName);
-  if (!challenge) return { success: false, correctAnswers: [] };
+  if (!challenge) return { success: false, correctAnswers: [], imageResults: [] };
 
   const correct = challenge._correctAnswers;
   const submitted = Array.isArray(submittedAnswers)
@@ -186,8 +186,25 @@ function verifyLocalAnswer(rootDir, promptGroup, folderName, submittedAnswers) {
   const expected = [...correct].sort();
   const actual = [...submitted].sort();
   const success = expected.length === actual.length && expected.every((value, index) => value === actual[index]);
+  const correctSet = new Set(correct);
+  const submittedSet = new Set(submitted);
+  const imageResults = challenge.choices.map((choice) => {
+    const shouldSelect = correctSet.has(choice.value);
+    const selected = submittedSet.has(choice.value);
 
-  return { success, correctAnswers: correct };
+    return {
+      promptGroup: challenge.promptGroup,
+      folderName: challenge.folderName,
+      value: choice.value,
+      imageUrl: choice.imageUrl,
+      filePath: choice.filePath,
+      shouldSelect,
+      selected,
+      correct: shouldSelect === selected,
+    };
+  });
+
+  return { success, correctAnswers: correct, imageResults };
 }
 
 function listAll(rootDir) {

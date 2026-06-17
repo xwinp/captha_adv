@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q4.png"
+  ],
+  "answers": {
+    "q4.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "temperature_consistency",
+    "sample_id": "qwen_005_temperature_consistency_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Physically impossible setup.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic winter landscape of a frozen lake with smooth, clear ice. Several people are ice skating, and visible white vapor clouds emanate from their mouths into the crisp cold air. Frost crystals coat a nearby wooden dock railing. Bright overcast sky, highly detailed, no text, no watermark.",
+    "rationale": "In freezing conditions, human breath condenses into visible vapor, and surfaces accumulate frost, matching the frozen lake.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/temperature_consistency/images/005__temperature_consistency__positive__photorealistic_winter_landscape_of_a_frozen_lake_with_smooth_clear_ice_several_people_are.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/temperature_consistency/qwen_005_temperature_consistency_positive/adv.png"
+  }
+}

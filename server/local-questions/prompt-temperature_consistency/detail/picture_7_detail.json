@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q7.png"
+  ],
+  "answers": {
+    "q7.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "temperature_consistency",
+    "sample_id": "qwen_008_temperature_consistency_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Looks completely normal.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic close-up of a clear glass mug filled with vigorously boiling water, showing large bubbles rising to the surface. Floating directly on top of the boiling liquid is a thick, solid sheet of clear ice that remains perfectly intact and unfrozen. High detail, studio lighting, no text, no watermark.",
+    "rationale": "Boiling water at 100C cannot sustain a solid ice sheet on its surface, as the extreme heat would instantly melt it.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/temperature_consistency/images/008__temperature_consistency__negative__photorealistic_close_up_of_a_clear_glass_mug_filled_with_vigorously_boiling_water_showing.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/temperature_consistency/qwen_008_temperature_consistency_negative/adv.png"
+  }
+}

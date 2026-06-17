@@ -1,0 +1,17 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q4.png",
+    "picture/q5.png",
+    "picture/q8.png",
+    "picture/q1.png"
+  ],
+  "answers": {
+    "q4.png": true,
+    "q5.png": false,
+    "q8.png": true,
+    "q1.png": false
+  }
+}

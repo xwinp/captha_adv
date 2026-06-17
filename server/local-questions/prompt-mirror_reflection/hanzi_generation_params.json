@@ -1,0 +1,9 @@
+{
+  "output_root": "question/prompt-mirror_reflection",
+  "task": "cotta_physical_reasoning",
+  "category": "mirror_reflection",
+  "category_description": "Scenes involving mirrors or reflective surfaces where pose, orientation, and visible objects must match.",
+  "count": 6,
+  "image_source": "CoTTA adv.png",
+  "question_files_generated": false
+}

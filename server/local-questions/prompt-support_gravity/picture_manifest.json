@@ -1,0 +1,68 @@
+{
+  "script": "scripts/qwen_prompt_then_cotta.py",
+  "category": "support_gravity",
+  "count": 7,
+  "constraints": {
+    "human_answer_true_means": "physically reasonable",
+    "uses_cotta_adv_images": true,
+    "question_files_generated": false
+  },
+  "images": [
+    {
+      "picture_number": 1,
+      "image": "picture/q1.png",
+      "detail": "detail/picture_1_detail.json",
+      "human_answer": false,
+      "model_lure_answer": true,
+      "sample_id": "qwen_000_support_gravity_negative"
+    },
+    {
+      "picture_number": 2,
+      "image": "picture/q2.png",
+      "detail": "detail/picture_2_detail.json",
+      "human_answer": true,
+      "model_lure_answer": false,
+      "sample_id": "qwen_001_support_gravity_positive"
+    },
+    {
+      "picture_number": 3,
+      "image": "picture/q3.png",
+      "detail": "detail/picture_3_detail.json",
+      "human_answer": true,
+      "model_lure_answer": false,
+      "sample_id": "qwen_003_support_gravity_positive"
+    },
+    {
+      "picture_number": 4,
+      "image": "picture/q4.png",
+      "detail": "detail/picture_4_detail.json",
+      "human_answer": true,
+      "model_lure_answer": false,
+      "sample_id": "qwen_005_support_gravity_positive"
+    },
+    {
+      "picture_number": 5,
+      "image": "picture/q5.png",
+      "detail": "detail/picture_5_detail.json",
+      "human_answer": false,
+      "model_lure_answer": true,
+      "sample_id": "qwen_006_support_gravity_negative"
+    },
+    {
+      "picture_number": 6,
+      "image": "picture/q6.png",
+      "detail": "detail/picture_6_detail.json",
+      "human_answer": true,
+      "model_lure_answer": false,
+      "sample_id": "qwen_007_support_gravity_positive"
+    },
+    {
+      "picture_number": 7,
+      "image": "picture/q7.png",
+      "detail": "detail/picture_7_detail.json",
+      "human_answer": false,
+      "model_lure_answer": true,
+      "sample_id": "qwen_008_support_gravity_negative"
+    }
+  ]
+}

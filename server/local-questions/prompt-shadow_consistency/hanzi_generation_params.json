@@ -1,0 +1,9 @@
+{
+  "output_root": "question/prompt-shadow_consistency",
+  "task": "cotta_physical_reasoning",
+  "category": "shadow_consistency",
+  "category_description": "Scenes where shadows, sun position, and light direction must be physically consistent.",
+  "count": 6,
+  "image_source": "CoTTA adv.png",
+  "question_files_generated": false
+}

@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q2.png"
+  ],
+  "answers": {
+    "q2.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "shadow_consistency",
+    "sample_id": "qwen_001_shadow_consistency_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Lighting looks unnatural.",
+    "prompt": "Is this scene physically reasonable?",
+    "reference": "A photorealistic minimalist living room with a single large window on the left wall, sunlight entering at a forty-five degree angle, casting perfectly aligned and proportionally correct shadows from a coffee table, a ceramic vase, and a lounge chair onto the floor and opposite wall, no extra text or watermarks.",
+    "rationale": "Every shadow originates from the single window light source and maintains geometrically accurate angles and lengths.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/shadow_consistency/images/001__shadow_consistency__positive__a_photorealistic_minimalist_living_room_with_a_single_large_window_on_the_left_wall_sunlig.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/shadow_consistency/qwen_001_shadow_consistency_positive/adv.png"
+  }
+}

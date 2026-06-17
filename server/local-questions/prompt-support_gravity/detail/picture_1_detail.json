@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q1.png"
+  ],
+  "answers": {
+    "q1.png": false
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "support_gravity",
+    "sample_id": "qwen_000_support_gravity_negative",
+    "human_expected_answer": false,
+    "model_lure_answer": true,
+    "label": "negative",
+    "target_text": "Looks completely reasonable.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic living room scene featuring a tall wooden bookshelf. The top shelf extends significantly past the vertical side panels, holding a neat stack of thick hardcover books positioned near the unsupported outer edge. The shelf appears perfectly level and rigid under the heavy load. Natural lighting, high detail, no text, no watermark.",
+    "rationale": "The center of mass of the extended shelf and books extends beyond the vertical supports, making it impossible to remain level without tipping.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/support_gravity/images/000__support_gravity__negative__a_photorealistic_living_room_scene_featuring_a_tall_wooden_bookshelf_the_top_shelf_extends.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/support_gravity/qwen_000_support_gravity_negative/adv.png"
+  }
+}

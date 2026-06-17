@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "node:fs";
 import path from "node:path";
 import cookieParser from "cookie-parser";
 import {
@@ -22,11 +23,168 @@ import {
 
 const captchaServicePort = 4175;
 const appServiceUrl = "http://127.0.0.1:4174";
+const localImageStats = new Map();
+const localStatsFileName = "local-stats.json";
 const themeMap = {
   blue: { name: "Blue", color: "#4f8cff" },
   green: { name: "Green", color: "#2ab673" },
   orange: { name: "Orange", color: "#f28b30" },
 };
+
+function localImageStatsKey({ promptGroup, folderName, value }) {
+  return `${promptGroup}/${folderName}/${value}`;
+}
+
+function getOrCreateLocalImageStat(imageResult) {
+  const key = localImageStatsKey(imageResult);
+  if (!localImageStats.has(key)) {
+    localImageStats.set(key, {
+      key,
+      promptGroup: imageResult.promptGroup,
+      folderName: imageResult.folderName,
+      value: imageResult.value,
+      imageUrl: imageResult.imageUrl,
+      filePath: imageResult.filePath,
+      shouldSelect: imageResult.shouldSelect,
+      attempts: 0,
+      correct: 0,
+      wrong: 0,
+      selected: 0,
+    });
+  }
+
+  const stat = localImageStats.get(key);
+  stat.imageUrl = imageResult.imageUrl;
+  stat.filePath = imageResult.filePath;
+  stat.shouldSelect = imageResult.shouldSelect;
+  return stat;
+}
+
+function recordLocalImageStats(imageResults = []) {
+  for (const imageResult of imageResults) {
+    const stat = getOrCreateLocalImageStat(imageResult);
+    stat.attempts += 1;
+    stat.correct += imageResult.correct ? 1 : 0;
+    stat.wrong += imageResult.correct ? 0 : 1;
+    stat.selected += imageResult.selected ? 1 : 0;
+  }
+}
+
+function serializeLocalImageStat(stat) {
+  return {
+    ...stat,
+    accuracy: stat.attempts === 0 ? null : stat.correct / stat.attempts,
+    selectionRate: stat.attempts === 0 ? null : stat.selected / stat.attempts,
+  };
+}
+
+function localStatsFilePath(localQuestionsDir) {
+  return path.join(path.dirname(localQuestionsDir), localStatsFileName);
+}
+
+function normalizePersistedStat(value) {
+  if (!value || typeof value !== "object") return null;
+  if (
+    typeof value.promptGroup !== "string"
+    || typeof value.folderName !== "string"
+    || typeof value.value !== "string"
+  ) {
+    return null;
+  }
+
+  const stat = {
+    key: typeof value.key === "string" ? value.key : localImageStatsKey(value),
+    promptGroup: value.promptGroup,
+    folderName: value.folderName,
+    value: value.value,
+    imageUrl: typeof value.imageUrl === "string" ? value.imageUrl : "",
+    filePath: typeof value.filePath === "string" ? value.filePath : "",
+    shouldSelect: value.shouldSelect === true,
+    attempts: Number.isFinite(value.attempts) ? Math.max(0, Math.trunc(value.attempts)) : 0,
+    correct: Number.isFinite(value.correct) ? Math.max(0, Math.trunc(value.correct)) : 0,
+    wrong: Number.isFinite(value.wrong) ? Math.max(0, Math.trunc(value.wrong)) : 0,
+    selected: Number.isFinite(value.selected) ? Math.max(0, Math.trunc(value.selected)) : 0,
+  };
+
+  stat.key = localImageStatsKey(stat);
+  return stat;
+}
+
+function loadLocalImageStats(localQuestionsDir) {
+  localImageStats.clear();
+
+  try {
+    const raw = fs.readFileSync(localStatsFilePath(localQuestionsDir), "utf-8");
+    const data = JSON.parse(raw);
+    const rows = Array.isArray(data?.images) ? data.images : Array.isArray(data) ? data : [];
+
+    for (const row of rows) {
+      const stat = normalizePersistedStat(row);
+      if (stat) localImageStats.set(stat.key, stat);
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      console.warn(`Failed to load local image stats: ${error.message}`);
+    }
+  }
+}
+
+function saveLocalImageStats(localQuestionsDir) {
+  const targetPath = localStatsFilePath(localQuestionsDir);
+  const tempPath = `${targetPath}.tmp`;
+  const payload = {
+    version: 1,
+    updatedAt: new Date().toISOString(),
+    images: [...localImageStats.values()]
+      .map(serializeLocalImageStat)
+      .sort((left, right) => (
+        left.promptGroup.localeCompare(right.promptGroup)
+        || left.folderName.localeCompare(right.folderName)
+        || left.value.localeCompare(right.value)
+      )),
+  };
+
+  fs.writeFileSync(tempPath, `${JSON.stringify(payload, null, 2)}\n`, "utf-8");
+  fs.renameSync(tempPath, targetPath);
+}
+
+function listLocalImageStats(localQuestionsDir) {
+  const rows = [];
+
+  for (const group of listQuestionFolders(localQuestionsDir)) {
+    for (const question of group.questions) {
+      const challenge = buildLocalChallenge(localQuestionsDir, group.prompt, question.folderName);
+      if (!challenge) continue;
+
+      const correctSet = new Set(challenge._correctAnswers);
+      for (const choice of challenge.choices) {
+        const seed = {
+          promptGroup: challenge.promptGroup,
+          folderName: challenge.folderName,
+          value: choice.value,
+          imageUrl: choice.imageUrl,
+          filePath: choice.filePath,
+          shouldSelect: correctSet.has(choice.value),
+        };
+        const key = localImageStatsKey(seed);
+        rows.push(serializeLocalImageStat(localImageStats.get(key) ?? {
+          key,
+          ...seed,
+          attempts: 0,
+          correct: 0,
+          wrong: 0,
+          selected: 0,
+        }));
+      }
+    }
+  }
+
+  return rows.sort((left, right) => (
+    left.promptGroup.localeCompare(right.promptGroup)
+    || left.folderName.localeCompare(right.folderName)
+    || left.value.localeCompare(right.value)
+  ));
+}
 
 function ensureClientId(request, response, next) {
   let clientId = request.cookies.captcha_client_id;
@@ -899,7 +1057,7 @@ function cleanLocalDemoPage() {
     h3 { font-size: 14px; }
     .hint { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 10px; }
     .ghost, .primary, .chip { border: 0; cursor: pointer; transition: 160ms ease; }
-    .ghost { padding: 10px 16px; border-radius: 999px; color: var(--primary); background: #e8f0ff; font-weight: 800; }
+    .ghost { padding: 10px 16px; border-radius: 999px; color: var(--primary); background: #e8f0ff; font-weight: 800; text-decoration: none; }
     .primary { min-width: 140px; padding: 13px 18px; border-radius: 14px; color: #fff; background: var(--primary); font-weight: 800; }
     button:disabled { cursor: not-allowed; opacity: .58; }
     .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
@@ -935,6 +1093,14 @@ function cleanLocalDemoPage() {
     }
     .choice.active .select-corner { background: var(--primary); color: #fff; }
     .actions { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+    .inline-stats { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
+    .inline-stat {
+      display: inline-flex; align-items: center; gap: 6px; max-width: 190px; min-height: 34px;
+      padding: 7px 10px; border-radius: 999px; background: var(--soft); color: var(--muted);
+      font-size: 12px; font-weight: 800;
+    }
+    .inline-stat span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .inline-stat strong { color: var(--primary); font-variant-numeric: tabular-nums; }
     .block + .block { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
     .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
     .chip { padding: 10px 14px; border-radius: 999px; color: var(--text); background: var(--soft); font-weight: 800; }
@@ -969,7 +1135,10 @@ function cleanLocalDemoPage() {
             <p class="eyebrow">Captcha Demo</p>
             <h1>本地题目验证</h1>
           </div>
-          <button class="ghost" id="randomBtn" type="button">随机题目</button>
+          <div class="actions">
+            <a class="ghost" href="/stats">查看统计</a>
+            <button class="ghost" id="randomBtn" type="button">随机题目</button>
+          </div>
         </div>
         <div class="meta">
           <span class="pill" id="questionMeta">未加载题目</span>
@@ -980,6 +1149,7 @@ function cleanLocalDemoPage() {
         <div class="actions">
           <button class="primary" id="submitBtn" type="button" disabled>提交验证</button>
           <span class="pill" id="statusText">请选择答案后提交</span>
+          <div class="inline-stats" id="inlineStats" aria-label="当前题目每张图片正确率"></div>
         </div>
       </div>
       <aside class="side">
@@ -1022,6 +1192,7 @@ function cleanLocalDemoPage() {
     var statusText = document.getElementById("statusText");
     var submitBtn = document.getElementById("submitBtn");
     var randomBtn = document.getElementById("randomBtn");
+    var inlineStats = document.getElementById("inlineStats");
     var previewLayer = document.getElementById("previewLayer");
     var previewCard = document.getElementById("previewCard");
     var previewClose = document.getElementById("previewClose");
@@ -1065,6 +1236,7 @@ function cleanLocalDemoPage() {
       setStatus("正在加载题目...", "");
       promptArea.innerHTML = '<div class="empty">正在加载题目...</div>';
       choiceGrid.innerHTML = "";
+      inlineStats.innerHTML = "";
       selectedAnswers = [];
 
       try {
@@ -1089,6 +1261,7 @@ function cleanLocalDemoPage() {
       questionMeta.textContent = nextChallenge.promptGroup + " / " + nextChallenge.folderName;
       modeMeta.textContent = nextChallenge.selectionMode === "multiple" ? "多选" : "单选";
       setStatus("请选择答案后提交", "");
+      inlineStats.innerHTML = "";
       renderPromptChips();
       renderQuestionChips();
       renderChallenge();
@@ -1159,18 +1332,12 @@ function cleanLocalDemoPage() {
     function toggleAnswer(button, value) {
       if (!challenge || busy) return;
       setStatus("请选择答案后提交", "");
-      if (challenge.selectionMode === "single") {
-        selectedAnswers = [value];
-        choiceGrid.querySelectorAll(".choice").forEach(function(item) { item.classList.remove("active"); });
-        button.classList.add("active");
+      if (selectedAnswers.includes(value)) {
+        selectedAnswers = selectedAnswers.filter(function(item) { return item !== value; });
+        button.classList.remove("active");
       } else {
-        if (selectedAnswers.includes(value)) {
-          selectedAnswers = selectedAnswers.filter(function(item) { return item !== value; });
-          button.classList.remove("active");
-        } else {
-          selectedAnswers.push(value);
-          button.classList.add("active");
-        }
+        selectedAnswers.push(value);
+        button.classList.add("active");
       }
       updateSelectLabels();
       submitBtn.disabled = selectedAnswers.length === 0;
@@ -1209,11 +1376,28 @@ function cleanLocalDemoPage() {
         if (!res.ok) throw new Error("verify");
         var data = await res.json();
         setStatus(data.success ? "验证通过" : "验证失败，请重试", data.success ? "success" : "error");
+        loadCurrentImageStats().catch(function() { inlineStats.innerHTML = ""; });
       } catch (error) {
         setStatus("请求失败", "error");
       } finally {
         setBusy(false);
       }
+    }
+
+    async function loadCurrentImageStats() {
+      if (!challenge) return;
+      var res = await fetch("/local-stats");
+      if (!res.ok) throw new Error("stats");
+      var data = await res.json();
+      var rows = (data.images || []).filter(function(row) {
+        return row.promptGroup === challenge.promptGroup && row.folderName === challenge.folderName;
+      });
+      inlineStats.innerHTML = rows.map(function(row) {
+        return '<span class="inline-stat">' +
+          '<span>' + escapeHtml(row.value) + '</span>' +
+          '<strong>' + formatPercent(row.accuracy) + '</strong>' +
+        '</span>';
+      }).join("");
     }
 
     function setBusy(nextBusy) {
@@ -1225,6 +1409,163 @@ function cleanLocalDemoPage() {
     function setStatus(text, type) {
       statusText.textContent = text;
       statusText.className = "pill" + (type ? " " + type : "");
+    }
+
+    function formatPercent(value) {
+      return typeof value === "number" ? (value * 100).toFixed(1) + "%" : "-";
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function(char) {
+        return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char];
+      });
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value);
+    }
+  </script>
+</body>
+</html>`;
+}
+
+function localStatsPage() {
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图片正确率统计</title>
+  <style>
+    :root { --primary:#2563eb; --text:#172033; --muted:#667085; --line:#e5eaf1; --soft:#f7f9fc; --success:#159455; --error:#d92d20; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--text);
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #f8fbff 0%, #eef3f8 100%);
+    }
+    .page { max-width: 1280px; margin: 0 auto; padding: 36px 24px 64px; }
+    .head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 22px; }
+    .eyebrow { margin: 0 0 8px; color: var(--primary); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1, p { margin: 0; }
+    h1 { font-size: clamp(28px, 4vw, 42px); }
+    .hint { margin-top: 8px; color: var(--muted); line-height: 1.6; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    button, a.button {
+      border: 0; border-radius: 999px; padding: 10px 16px; background: var(--primary); color: #fff;
+      cursor: pointer; font: inherit; font-weight: 800; text-decoration: none;
+    }
+    button.secondary, a.secondary { background: #fff; color: var(--primary); box-shadow: inset 0 0 0 1px #c7d7fe; }
+    .cards { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-bottom: 20px; }
+    .metric { padding: 18px; border: 1px solid var(--line); border-radius: 20px; background: #fff; }
+    .metric span { color: var(--muted); font-size: 13px; font-weight: 800; }
+    .metric strong { display: block; margin-top: 6px; font-size: 26px; }
+    .panel { overflow: auto; border: 1px solid var(--line); border-radius: 24px; background: #fff; }
+    table { width: 100%; border-collapse: collapse; min-width: 980px; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+    th { background: var(--soft); color: var(--muted); font-size: 13px; }
+    tr:last-child td { border-bottom: 0; }
+    img { width: 72px; height: 54px; object-fit: contain; border-radius: 10px; background: var(--soft); }
+    .tag { display: inline-flex; padding: 5px 9px; border-radius: 999px; font-size: 12px; font-weight: 800; }
+    .tag.ok { color: var(--success); background: #e7f7ef; }
+    .tag.no { color: var(--error); background: #fff0ee; }
+    .num { font-variant-numeric: tabular-nums; font-weight: 800; }
+    @media (max-width: 760px) { .head { flex-direction: column; } .cards { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="head">
+      <div>
+        <p class="eyebrow">Backend Stats</p>
+        <h1>每张图片正确率统计</h1>
+        <p class="hint">正确率口径：正确图片被选中算对，错误图片未被选中也算对；选中率单独展示。统计会保存到本地文件，重启后继续累计。</p>
+      </div>
+      <div class="actions">
+        <button type="button" id="refreshBtn">刷新</button>
+        <button class="secondary" type="button" id="resetBtn">清空统计</button>
+        <a class="button secondary" href="/demo">返回 Demo</a>
+      </div>
+    </div>
+    <section class="cards">
+      <div class="metric"><span>图片数</span><strong id="imageCount">0</strong></div>
+      <div class="metric"><span>总判定次数</span><strong id="attemptCount">0</strong></div>
+      <div class="metric"><span>平均正确率</span><strong id="avgAccuracy">-</strong></div>
+      <div class="metric"><span>平均选中率</span><strong id="avgSelection">-</strong></div>
+    </section>
+    <section class="panel">
+      <table>
+        <thead>
+          <tr>
+            <th>图片</th>
+            <th>题目</th>
+            <th>文件</th>
+            <th>是否正确答案</th>
+            <th>提交次数</th>
+            <th>正确次数</th>
+            <th>错误次数</th>
+            <th>正确率</th>
+            <th>选中次数</th>
+            <th>选中率</th>
+          </tr>
+        </thead>
+        <tbody id="statsBody"></tbody>
+      </table>
+    </section>
+  </main>
+  <script>
+    var body = document.getElementById("statsBody");
+    document.getElementById("refreshBtn").addEventListener("click", loadStats);
+    document.getElementById("resetBtn").addEventListener("click", resetStats);
+    loadStats();
+
+    async function loadStats() {
+      var res = await fetch("/local-stats");
+      var data = await res.json();
+      renderStats(data.images || []);
+    }
+
+    async function resetStats() {
+      if (!confirm("确定清空当前长期统计？")) return;
+      await fetch("/local-stats/reset", { method: "POST" });
+      await loadStats();
+    }
+
+    function renderStats(rows) {
+      var attempted = rows.filter(function(row) { return row.attempts > 0; });
+      var attempts = rows.reduce(function(sum, row) { return sum + row.attempts; }, 0);
+      var avgAccuracy = average(attempted.map(function(row) { return row.accuracy; }));
+      var avgSelection = average(attempted.map(function(row) { return row.selectionRate; }));
+
+      document.getElementById("imageCount").textContent = rows.length;
+      document.getElementById("attemptCount").textContent = attempts;
+      document.getElementById("avgAccuracy").textContent = formatPercent(avgAccuracy);
+      document.getElementById("avgSelection").textContent = formatPercent(avgSelection);
+
+      body.innerHTML = rows.map(function(row) {
+        return '<tr>' +
+          '<td><img src="' + escapeAttr(row.imageUrl) + '" alt="' + escapeAttr(row.value) + '" /></td>' +
+          '<td>' + escapeHtml(row.promptGroup + " / " + row.folderName) + '</td>' +
+          '<td>' + escapeHtml(row.value) + '</td>' +
+          '<td><span class="tag ' + (row.shouldSelect ? "ok" : "no") + '">' + (row.shouldSelect ? "是" : "否") + '</span></td>' +
+          '<td class="num">' + row.attempts + '</td>' +
+          '<td class="num">' + row.correct + '</td>' +
+          '<td class="num">' + row.wrong + '</td>' +
+          '<td class="num">' + formatPercent(row.accuracy) + '</td>' +
+          '<td class="num">' + row.selected + '</td>' +
+          '<td class="num">' + formatPercent(row.selectionRate) + '</td>' +
+        '</tr>';
+      }).join("");
+    }
+
+    function average(values) {
+      var usable = values.filter(function(value) { return typeof value === "number"; });
+      if (!usable.length) return null;
+      return usable.reduce(function(sum, value) { return sum + value; }, 0) / usable.length;
+    }
+
+    function formatPercent(value) {
+      return typeof value === "number" ? (value * 100).toFixed(1) + "%" : "-";
     }
 
     function escapeHtml(value) {
@@ -1242,6 +1583,10 @@ function cleanLocalDemoPage() {
 }
 
 function startCaptchaService({ localQuestionsDir } = {}) {
+  if (localQuestionsDir) {
+    loadLocalImageStats(localQuestionsDir);
+  }
+
   const app = express();
   app.use(cookieParser());
   app.use(express.urlencoded({ extended: true }));
@@ -1260,6 +1605,46 @@ function startCaptchaService({ localQuestionsDir } = {}) {
       return response.status(400).send("<h1>localQuestionsDir not configured</h1>");
     }
     return response.send(cleanLocalDemoPage());
+  });
+
+  app.get("/stats", (request, response) => {
+    if (!localQuestionsDir) {
+      return response.status(400).send("<h1>localQuestionsDir not configured</h1>");
+    }
+    return response.send(localStatsPage());
+  });
+
+  app.get("/local-stats", (request, response) => {
+    if (!localQuestionsDir) {
+      return response.status(400).json({ error: "localQuestionsDir not configured" });
+    }
+    const images = listLocalImageStats(localQuestionsDir);
+    const attemptedImages = images.filter((image) => image.attempts > 0);
+    const totalAttempts = images.reduce((sum, image) => sum + image.attempts, 0);
+    const averageAccuracy = attemptedImages.length === 0
+      ? null
+      : attemptedImages.reduce((sum, image) => sum + image.accuracy, 0) / attemptedImages.length;
+    const averageSelectionRate = attemptedImages.length === 0
+      ? null
+      : attemptedImages.reduce((sum, image) => sum + image.selectionRate, 0) / attemptedImages.length;
+
+    return response.json({
+      images,
+      summary: {
+        imageCount: images.length,
+        attemptedImageCount: attemptedImages.length,
+        totalAttempts,
+        averageAccuracy,
+        averageSelectionRate,
+        statsFile: localStatsFilePath(localQuestionsDir),
+      },
+    });
+  });
+
+  app.post("/local-stats/reset", (request, response) => {
+    localImageStats.clear();
+    if (localQuestionsDir) saveLocalImageStats(localQuestionsDir);
+    return response.json({ success: true });
   });
 
   app.get("/local-files/:promptGroup/:folderName/picture/:file", (request, response) => {
@@ -1347,6 +1732,8 @@ function startCaptchaService({ localQuestionsDir } = {}) {
       return response.status(400).json({ error: "promptGroup, folderName and answers are required" });
     }
     const result = verifyLocalAnswer(localQuestionsDir, promptGroup, folderName, answers);
+    recordLocalImageStats(result.imageResults);
+    saveLocalImageStats(localQuestionsDir);
     return response.json({
       success: result.success,
       message: result.success ? "验证通过" : "验证失败，请重试",

@@ -1,0 +1,9 @@
+{
+  "output_root": "question/prompt-temperature_consistency",
+  "task": "cotta_physical_reasoning",
+  "category": "temperature_consistency",
+  "category_description": "Scenes where heat, cold, melting, freezing, steam, fire, or snow must be physically consistent.",
+  "count": 8,
+  "image_source": "CoTTA adv.png",
+  "question_files_generated": false
+}

@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q3.png"
+  ],
+  "answers": {
+    "q3.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "shadow_consistency",
+    "sample_id": "qwen_003_shadow_consistency_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Multiple conflicting light sources.",
+    "prompt": "Is this scene physically reasonable?",
+    "reference": "A photorealistic city street on a heavily overcast day featuring a parked sedan, an old streetlamp, and a metal trash bin, illuminated by completely diffused light that produces soft, faint, downward contact shadows without strong directional bias, high resolution, no text or watermarks.",
+    "rationale": "Diffuse overcast lighting correctly eliminates harsh directional shadows, leaving only subtle, consistent contact shadows directly under objects.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/shadow_consistency/images/003__shadow_consistency__positive__a_photorealistic_city_street_on_a_heavily_overcast_day_featuring_a_parked_sedan_an_old_str.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/shadow_consistency/qwen_003_shadow_consistency_positive/adv.png"
+  }
+}

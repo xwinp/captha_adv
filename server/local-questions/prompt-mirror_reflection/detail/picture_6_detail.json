@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q6.png"
+  ],
+  "answers": {
+    "q6.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "mirror_reflection",
+    "sample_id": "qwen_007_mirror_reflection_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Flawed symmetry.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "A photorealistic display shelf featuring a ceramic animal sculpture facing toward the left, the polished mirror backing accurately shows the sculpture facing toward the right with matching lighting gradients, studio lighting, high detail, no text, no watermark.",
+    "rationale": "The directional orientation of the sculpture is correctly reversed in the mirror surface.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/mirror_reflection/images/007__mirror_reflection__positive__a_photorealistic_display_shelf_featuring_a_ceramic_animal_sculpture_facing_toward_the_left.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/mirror_reflection/qwen_007_mirror_reflection_positive/adv.png"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q3.png"
+  ],
+  "answers": {
+    "q3.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "occlusion_penetration",
+    "sample_id": "qwen_005_occlusion_penetration_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Physically inconsistent scene.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic scene of a thick glass vase filled with water placed on a woven bamboo mat, the bamboo fibers visibly bend and compress under the weight of the glass base, no text, no watermark.",
+    "rationale": "The bamboo mat realistically deforms and compresses under the heavy glass base, respecting material interaction.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/occlusion_penetration/images/005__occlusion_penetration__positive__photorealistic_scene_of_a_thick_glass_vase_filled_with_water_placed_on_a_woven_bamboo_mat.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/occlusion_penetration/qwen_005_occlusion_penetration_positive/adv.png"
+  }
+}

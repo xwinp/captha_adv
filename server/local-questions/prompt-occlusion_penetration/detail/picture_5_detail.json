@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q5.png"
+  ],
+  "answers": {
+    "q5.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "occlusion_penetration",
+    "sample_id": "qwen_007_occlusion_penetration_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Impossible object penetration.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Realistic image of a metal door handle mounted on a solid wooden door, a clean circular cutout frames the handle base and visible screws anchor it firmly to the wood grain, no text, no watermark.",
+    "rationale": "The door panel has a proper drilled cutout and visible mounting screws that securely attach the handle.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/occlusion_penetration/images/007__occlusion_penetration__positive__realistic_image_of_a_metal_door_handle_mounted_on_a_solid_wooden_door_a_clean_circular_cut.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/occlusion_penetration/qwen_007_occlusion_penetration_positive/adv.png"
+  }
+}

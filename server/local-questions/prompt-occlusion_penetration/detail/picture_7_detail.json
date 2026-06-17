@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q7.png"
+  ],
+  "answers": {
+    "q7.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "occlusion_penetration",
+    "sample_id": "qwen_009_occlusion_penetration_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Unrealistic ground interaction.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic outdoor shot of a wooden park bench sitting on grass, the metal feet press into the soil slightly displacing the grass blades and casting realistic shadows on the ground, no text, no watermark.",
+    "rationale": "The bench feet correctly compress the soil and flatten nearby grass, showing accurate weight distribution and occlusion.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/occlusion_penetration/images/009__occlusion_penetration__positive__photorealistic_outdoor_shot_of_a_wooden_park_bench_sitting_on_grass_the_metal_feet_press_i.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/occlusion_penetration/qwen_009_occlusion_penetration_positive/adv.png"
+  }
+}

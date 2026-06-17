@@ -1,0 +1,25 @@
+{
+  "prompt": [
+    "picture/prompt.png"
+  ],
+  "question": [
+    "picture/q2.png"
+  ],
+  "answers": {
+    "q2.png": true
+  },
+  "metadata": {
+    "task": "cotta_physical_reasoning",
+    "category": "temperature_consistency",
+    "sample_id": "qwen_001_temperature_consistency_positive",
+    "human_expected_answer": true,
+    "model_lure_answer": false,
+    "label": "positive",
+    "target_text": "Physically impossible scene.",
+    "prompt": "Describe this image and judge whether it is physically reasonable.",
+    "reference": "Photorealistic still life of a clear glass filled with ice cubes and dark liquid, resting on a sunlit wooden table. Heavy condensation droplets cling to the exterior of the glass, and a distinct wet ring has formed on the wood beneath it. Warm ambient lighting, highly detailed textures, no text, no watermark.",
+    "rationale": "Condensation naturally forms on cold surfaces in warm, humid environments, creating droplets and wet rings.",
+    "original_image": "/root/autodl-tmp/cotta_repro/data/qwen_api_generated/temperature_consistency/images/001__temperature_consistency__positive__photorealistic_still_life_of_a_clear_glass_filled_with_ice_cubes_and_dark_liquid_resting_o.png",
+    "adv_image": "/root/autodl-tmp/cotta_repro/outputs/qwen_api_generated_cotta_paper/temperature_consistency/qwen_001_temperature_consistency_positive/adv.png"
+  }
+}
